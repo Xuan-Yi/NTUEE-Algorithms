@@ -29,7 +29,7 @@
 ## Check Output with Answer
 * First compile executable with
     ```bash
-    make lib/compile
+    make lib/compare
     ```
 * If you want to check **outputs/12.out**, you can use
     ```bash
