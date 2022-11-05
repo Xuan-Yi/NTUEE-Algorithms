@@ -1,3 +1,16 @@
+original
+
+# pa1
+pa1/b09901080_pa1_submit
+pa1/b09901080_pa1
+
+# pa2
+pa2/backup
+pa2/b09901080_pa2
+
+# Tempfiles
+*.tmp
+
 # Prerequisites
 *.d
 
@@ -30,3 +43,19 @@
 *.exe
 *.out
 *.app
+
+# Images
+*.jpg
+
+# Documents / Spreadsheets
+*.docx
+*.xlsx
+*.css
+
+# Zip files
+*.zip
+*.tar
+*.tgz
+
+# Intelligence
+*.vscode
