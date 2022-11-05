@@ -21,6 +21,20 @@
     # Export to outputs/12.out
     ./bin/mps inputs/12.in outputs/12.out
     ```
+* If you got error message like **"bash: ./bin/mps: 拒絕不符權限的操作"**, try
+    ```bash
+    chmod u+x bin/mps 
+    ```
+
+## Check Output with Answer
+* First compile executable with
+    ```bash
+    make lib/compile
+    ```
+* If you want to check **outputs/12.out**, you can use
+    ```bash
+    ./lib/compare outputs/12.out golden/12.out
+    ```
 
 ## Remove All Executables
 * Remove **bin/mps**.

@@ -24,6 +24,7 @@ int main(int argc, char **argv)
     vector<chord> maxChords;
 
     cout << maxChordNum << endl;
+    cout.flush();
     maxChords = mpsc.getVaryChords();
 
     // show M, Cases

@@ -1,6 +1,6 @@
 .PHONY: all clean run
-CC=gcc
-CFLAGS=-std=c++17 -O2
+CC=g++
+CFLAGS=-std=c++17 -O3
 LDFLAGS=-lstdc++
 TARGET=bin/mps lib/compare
 

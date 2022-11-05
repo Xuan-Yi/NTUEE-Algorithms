@@ -17,8 +17,6 @@ typedef struct
     int j; // second pivot
 } chord;
 
-const int MAX_CHORD_NUM = 90000; // max n
-
 class MPSC
 {
 private:

@@ -107,19 +107,54 @@ void MPSC::wrt2M(int i, int j, int val)
 
     if (M[i] == nullptr)
     {
-        // allocate array M[i]
-        M[i] = new int[2 * n - i]; // j: i~2n-1
+        if (i != j)
+        {
+            // allocate array M[i]
+            M[i] = new int[2 * n - i]; // j: i~2n-1
 
-        M[i][0] = 0; // i=j
-        for (int l = 1; l < 2 * n - i; l++)
-            M[i][l] = -1;
+            M[i][0] = 0; // i=j
+            for (int l = 1; l < 2 * n - i; l++)
+                M[i][l] = -1;
+        }
     }
-
-    M[i][j - i] = val;
+    if (i != j && M[i] != nullptr)
+    {
+        // cout << "write1 (" << i << ", " << j << ") " << val << endl;
+        M[i][j - i] = val;
+        // cout << "write2 (" << i << ", " << j << ") " << val << endl;
+    }
 }
 
 int MPSC::rd4M(int i, int j)
 {
+    if (i >= j)
+    {
+        /*
+        cout << "read (" << i << ", " << j - i << ") ";
+        cout <<  0 << endl;
+        */
+        return 0;
+    }
+    else
+    {
+        if (M[i] == nullptr)
+        {
+            /*
+            cout << "read (" << i << ", " << j - i << ") ";
+            cout << -1 << endl;
+            */
+            return -1;
+        }
+        else
+        {
+            /*
+            cout << "read (" << i << ", " << j - i << ") ";
+            cout << M[i][j - i] << endl;
+            */
+            return M[i][j - i];
+        }
+    }
+    /*
     if (M[i] == nullptr)
     {
         if (i == j)
@@ -129,13 +164,13 @@ int MPSC::rd4M(int i, int j)
     }
     else
         return M[i][j - i];
+    */
 }
 
 void MPSC::wrt2Cases(int i, int j, char _case)
 {
     // map_i = i
     // map_j = j-i
-
     if (Cases[i] == nullptr)
     {
         // allocate array Cases[i]
@@ -144,6 +179,7 @@ void MPSC::wrt2Cases(int i, int j, char _case)
         for (int l = 0; l < 2 * n - i; l++)
             Cases[i][l] = '0';
     }
+
     Cases[i][j - i] = _case;
 }
 
@@ -203,11 +239,13 @@ void MPSC::showCases()
 
 int MPSC::getMaxChordNum()
 {
-    return MIS(0, 2 * n - 1);
+    int m = MIS(0, 2 * n - 1);
+    return m;
 }
 
 int MPSC::MIS(int i, int j)
 {
+    // cout<<"Hi4("<<i<<", "<<j<<")\n";
 
     if (rd4M(i, j) != -1) // existed in M
         return rd4M(i, j);
@@ -218,7 +256,8 @@ int MPSC::MIS(int i, int j)
     {
         if ((k < i || k > j))
         {
-            // M[i][j] = M[i][j - 1];
+            // cout<<"Hi5("<<i<<", "<<j<<")\n";
+            //  M[i][j] = M[i][j - 1];
             int to_write = rd4M(i, j - 1);
 
             if (to_write == -1)
@@ -232,7 +271,8 @@ int MPSC::MIS(int i, int j)
         }
         else if (k == i)
         {
-            // M[i][j] = M[i + 1][j - 1] + 1;
+            // cout<<"Hi5.2\n";
+            //  M[i][j] = M[i + 1][j - 1] + 1;
             int to_write = rd4M(i + 1, j - 1);
 
             if (to_write == -1)
@@ -247,7 +287,8 @@ int MPSC::MIS(int i, int j)
         }
         else
         {
-            // M[i][j] = max(M[i][j - 1], M[i][k - 1] + 1 + M[k + 1][j - 1]);
+            // cout<<"Hi5.3\n";
+            //  M[i][j] = max(M[i][j - 1], M[i][k - 1] + 1 + M[k + 1][j - 1]);
             int to_write1 = rd4M(i, j - 1);
             int to_write2;
             int to_write2_1 = rd4M(i, k - 1);
@@ -284,10 +325,13 @@ int MPSC::MIS(int i, int j)
     }
     else // kj is not chord
     {
+        // cout<<"Hi0("<<i<<", "<<j<<")\n";
         int to_write = MIS(i, j - 1);
-
+        // cout<<"Hi1\n";
         wrt2M(i, j, to_write);
+        // cout<<"Hi2\n";
         wrt2Cases(i, j, '1');
+        // cout<<"Hi3\n";
     }
 
     return rd4M(i, j);
@@ -324,7 +368,7 @@ void MPSC::traceBack(int i, int j)
 
         break;
     default:
-        if (i != j) // If i==j, it's base case, no chord to append, just skip
+        if (i < j) // If i==j, it's base case, no chord to append, just skip
             cout << "traceback (" << i << ", " << j << ") = " << rd4Cases(i, j) << " error \n";
         break;
     }
