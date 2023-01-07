@@ -1,5 +1,24 @@
 original
 
+# test data
+*.in
+*.out
+*/*/inputs
+*/*/outputs
+
+# compressed file
+*.tgz
+*.zip
+*.tar
+
+# report
+*.word
+doc/
+README
+*/README
+*/*/README
+*.md
+
 # pa1
 pa1/b09901080_pa1_submit
 pa1/b09901080_pa1
@@ -8,6 +27,9 @@ pa1/b09901080_pa1
 pa2/backup
 pa2/b09901080_pa2
 !pa2/pa2/golden/
+
+# pa3
+backup*/
 
 # Tempfiles
 *.tmp
@@ -20,6 +42,8 @@ pa2/b09901080_pa2
 *.lo
 *.o
 *.obj
+*/bin
+*/*/bin/
 
 # Precompiled Headers
 *.gch
